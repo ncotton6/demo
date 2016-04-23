@@ -29,6 +29,7 @@ public class IndexController {
 		return "index";
 	}
 
+	@RequestMapping(value = "/gen", method = RequestMethod.GET)
 	public String operationBreakDown(Model model, String input, Double threshold) {
 		if (input == null)
 			return "redirect:/";
@@ -39,38 +40,48 @@ public class IndexController {
 		Map<MappingSource, String> startingPoint = new HashMap<MappingSource, String>();
 		for (String v : values) {
 			String[] name_type = v.split(":");
-			startingPoint.put(new MappingSource("Initial", name_type[0]), name_type[1]);
+			startingPoint.put(new MappingSource("Initial", name_type[1]), name_type[0]);
 		}
 		model.addAttribute("result",
 				generateResult(startingPoint, new ArrayList<List<Operation>>(), new HashSet<Operation>(), threshold));
 		return "breakdown";
 	}
 
-	private List<List<Operation>> generateResult(Map<MappingSource, String> holding,
-			List<List<Operation>> execution, Set<Operation> used, double threshold) {
-		HashMap<MappingSource,String> toAdd = new HashMap<MappingSource, String>();
+	private List<List<Operation>> generateResult(Map<MappingSource, String> holding, List<List<Operation>> execution,
+			Set<Operation> used, double threshold) {
+		System.out.println("+++++++++++++++++++++++++");
+		for (Entry<MappingSource, String> ent : holding.entrySet()) {
+			System.out.println(ent.getKey().source + " : " + ent.getValue());
+		}
+		System.out.println("+++++++++++++++++++++++++");
+		HashMap<MappingSource, String> toAdd = new HashMap<MappingSource, String>();
 		execution.add(new ArrayList<Operation>());
 		boolean added = false;
-		for(Operation oper : OperationCollection.get()){
-			if(!used.contains(oper)){
-				try{
+		for (Operation oper : OperationCollection.get()) {
+			if (!used.contains(oper)) {
+				try {
 					Engine eng = new Engine(null, oper.getServiceName());
 					Map<MappingSource, String> operMap = oper.getInputMap();
-					List<FieldConnection> result = eng.mapGeneratService(holding, operMap, threshold,true);
+					List<FieldConnection> result = eng.mapGeneratService(holding, operMap, threshold, true);
 					for(FieldConnection fc : result){
-						MappingSource ms = new MappingSource(fc.toConnection, fc.toConnectionName);
-						toAdd.put(ms, operMap.get(ms));
+						System.out.println(":: " + fc.fromConnectionName + " <==> " + fc.toConnectionName);
 					}
-					execution.get(execution.size()-1).add(oper);
+					for (Entry<MappingSource, String> ent : oper.getOutputMap().entrySet()) {
+						toAdd.put(ent.getKey(), ent.getValue());
+					}
+					System.out.println("Adding: " + oper.getOperationName());
+					execution.get(execution.size() - 1).add(oper);
+					used.add(oper);
 					added = true;
-				}catch(NoMappingFound e){
-					
+				} catch (NoMappingFound e) {
+					System.out.println("Failed to Match: " + oper.getOperationName());
 				}
 			}
 		}
-		if(!added){
-			execution.remove(execution.size()-1);
-		}else{
+		System.out.println("===================");
+		if (!added) {
+			execution.remove(execution.size() - 1);
+		} else {
 			addTo(holding, toAdd);
 			return generateResult(holding, execution, used, threshold);
 		}

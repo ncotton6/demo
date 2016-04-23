@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Semantic Matching Demo</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{resources/css/main.css}"></link>
+</head>
+<body>
+	<h1>Generation Demo</h1>
+	<div th:each="stage : ${result}">
+		<div th:each="oper : ${stage}">
+			<div th:include="operation :: operation" th:with="oper=${oper}"></div>
+		</div>
+		<hr/>
+	</div>
+	<script type="text/javascript" th:src="@{resources/js/script.js}"></script>
+</body>
+</html>

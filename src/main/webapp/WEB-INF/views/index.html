@@ -8,6 +8,18 @@
 </head>
 <body>
 	<h1>Semantic Matching Demo</h1>
+	<form action="#" th:action="@{/gen}" method="get">
+		<div>
+			Available Data: <input type="text"
+				placeholder="(name:type,name:type)" th:name="input" />
+		</div>
+		<div>
+			Threshold: <input type="text" placeholder="(0-1)" th:name="threshold" />
+		</div>
+		<div>
+			<button type="submit">Generate</button>
+		</div>
+	</form>
 	<script type="text/javascript" th:src="@{resources/js/script.js}"></script>
 </body>
 </html>
