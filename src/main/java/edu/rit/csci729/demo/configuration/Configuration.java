@@ -1,4 +1,4 @@
-package edu.rit.csci729.assign3.configuration;
+package edu.rit.csci729.demo.configuration;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
  */
 @org.springframework.context.annotation.Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "edu.rit.csci729.assign3")
+@ComponentScan(basePackages = "edu.rit.csci729.demo")
 public class Configuration extends WebMvcConfigurerAdapter {
 
 	@Bean(name = "templateResolver")

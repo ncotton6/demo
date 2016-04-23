@@ -5,7 +5,7 @@
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Assign1</name>
+	<name>Demo</name>
 
 	<properties>
 		<springframework.version>4.0.6.RELEASE</springframework.version>
@@ -51,6 +51,33 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>csci729</groupId>
+			<artifactId>csci729</artifactId>
+			<version>1.0</version>
+			<!-- <scope>system</scope> -->
+			<!-- <systemPath>${project.basedir}/src/main/resources/csci729.jar</systemPath> -->
+		</dependency>
+		<dependency>
+			<groupId>sim</groupId>
+			<artifactId>sim</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>qname</groupId>
+			<artifactId>qname</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jaws</groupId>
+			<artifactId>jaws</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 

@@ -1,4 +1,4 @@
-package edu.rit.csci729.assign3.configuration;
+package edu.rit.csci729.demo.configuration;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
