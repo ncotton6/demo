@@ -36,11 +36,12 @@ public class IndexController {
 		if (threshold == null)
 			threshold = 0.9d;
 		// starting the process
+		model.addAttribute("starting", input);
 		String[] values = removeDups(input.split(","));
 		Map<MappingSource, String> startingPoint = new HashMap<MappingSource, String>();
 		for (String v : values) {
 			String[] name_type = v.split(":");
-			startingPoint.put(new MappingSource("Initial", name_type[1]), name_type[0]);
+			startingPoint.put(new MappingSource("Initial." + name_type[0], name_type[1]), name_type[0]);
 		}
 		model.addAttribute("result",
 				generateResult(startingPoint, new ArrayList<List<Operation>>(), new HashSet<Operation>(), threshold));
@@ -49,22 +50,19 @@ public class IndexController {
 
 	private List<List<Operation>> generateResult(Map<MappingSource, String> holding, List<List<Operation>> execution,
 			Set<Operation> used, double threshold) {
-		System.out.println("+++++++++++++++++++++++++");
-		for (Entry<MappingSource, String> ent : holding.entrySet()) {
-			System.out.println(ent.getKey().source + " : " + ent.getValue());
-		}
-		System.out.println("+++++++++++++++++++++++++");
 		HashMap<MappingSource, String> toAdd = new HashMap<MappingSource, String>();
 		execution.add(new ArrayList<Operation>());
 		boolean added = false;
 		for (Operation oper : OperationCollection.get()) {
 			if (!used.contains(oper)) {
+				Engine eng = new Engine(null, oper.getServiceName());
+				Map<MappingSource, String> operMap = oper.getInputMap();
 				try {
-					Engine eng = new Engine(null, oper.getServiceName());
-					Map<MappingSource, String> operMap = oper.getInputMap();
+					printMap(holding);
 					List<FieldConnection> result = eng.mapGeneratService(holding, operMap, threshold, true);
-					for(FieldConnection fc : result){
-						System.out.println(":: " + fc.fromConnectionName + " <==> " + fc.toConnectionName);
+					for (FieldConnection fc : result) {
+						System.out.println(":: " + fc.fromConnectionName + " <==> " + fc.toConnectionName + " === "
+								+ fc.qualityOfConnection);
 					}
 					for (Entry<MappingSource, String> ent : oper.getOutputMap().entrySet()) {
 						toAdd.put(ent.getKey(), ent.getValue());
@@ -75,8 +73,17 @@ public class IndexController {
 					added = true;
 				} catch (NoMappingFound e) {
 					System.out.println("Failed to Match: " + oper.getOperationName());
+					try {
+						List<FieldConnection> result = eng.mapGeneratService(holding, operMap, threshold, false);
+						for (FieldConnection fc : result) {
+							System.out.println(":: " + fc.fromConnectionName + " <==> " + fc.toConnectionName + " === "
+									+ fc.qualityOfConnection);
+						}
+					} catch (NoMappingFound e1) {
+					}
 				}
 			}
+			System.out.println("[][][][][][][][][][]");
 		}
 		System.out.println("===================");
 		if (!added) {
@@ -100,6 +107,14 @@ public class IndexController {
 			current.put(ent.getKey(), ent.getValue());
 		}
 		return current;
+	}
+
+	private void printMap(Map<MappingSource, String> map) {
+		System.out.println("------------------");
+		for (Entry<MappingSource, String> ent : map.entrySet()) {
+			System.out.println(ent.getKey().source + " : " + ent.getKey().type + " : " + ent.getValue());
+		}
+		System.out.println("------------------");
 	}
 
 }

@@ -28,11 +28,11 @@ public class OperationCollection extends ArrayList<Operation> {
 		Operation job = new Operation(new HashMap<String, String>() {
 			{
 				put("salary", "double");
-				put("location", "string");
+				put("zip", "string");
 			}
 		}, new HashMap<String, String>() {
 			{
-				put("jobTitle", "string");
+				put("job", "string");
 				put("salary", "double");
 				put("company", "title");
 			}
@@ -56,13 +56,13 @@ public class OperationCollection extends ArrayList<Operation> {
 		// job info
 		Operation jobInfo = new Operation(new HashMap<String, String>() {
 			{
-				put("position","string");
-				put("location","string");
+				put("profession", "string");
+				put("postcode", "string");
 			}
 		}, new HashMap<String, String>() {
 			{
-				put("average_salary","double");
-				put("happiness","double");
+				put("average_salary", "double");
+				put("happiness", "double");
 			}
 		});
 		jobInfo.setOperationName("JobInfo");

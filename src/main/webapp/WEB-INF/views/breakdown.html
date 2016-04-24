@@ -5,14 +5,48 @@
 <title>Semantic Matching Demo</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{resources/css/main.css}"></link>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous"></link>
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	crossorigin="anonymous"></link>
 </head>
 <body>
-	<h1>Generation Demo</h1>
-	<div th:each="stage : ${result}">
-		<div th:each="oper : ${stage}">
-			<div th:include="operation :: operation" th:with="oper=${oper}"></div>
+	<div class="col-md-6 col-md-offset-3">
+		<h1>
+			Generation Demo with {<span th:text="${starting}"></span>}
+		</h1>
+		<div th:each="stage : ${result}" class="panel panel-default">
+
+
+			<div class="panel-heading">Iteration: </div>
+
+			<div class="panel-body">
+				<div th:each="oper : ${stage}">
+					<h3 th:text="${oper.operationName}"></h3>
+					<h4>Inputs</h4>
+					<div th:each="ent : ${oper.getInputMap()}">
+						<div>
+							<span th:text="${ent.value}"></span> : <span
+								th:text="${ent.key.type}"></span>
+						</div>
+					</div>
+					<h4>Outputs</h4>
+					<div th:each="ent : ${oper.getOutputMap()}">
+						<div>
+							<span th:text="${ent.value}"></span> : <span
+								th:text="${ent.key.type}"></span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<hr/>
 	</div>
 	<script type="text/javascript" th:src="@{resources/js/script.js}"></script>
 </body>
