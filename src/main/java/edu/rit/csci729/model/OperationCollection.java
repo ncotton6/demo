@@ -34,7 +34,7 @@ public class OperationCollection extends ArrayList<Operation> {
 			{
 				put("job", "string");
 				put("salary", "double");
-				put("company", "title");
+				put("company", "string");
 			}
 		});
 		job.setOperationName("JobSearch");
