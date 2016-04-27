@@ -50,11 +50,16 @@
 						<div class="col-md-6">
 							<div th:each="fc : ${oper.v1}">
 								<div>
-									<div><span th:text="${fc.fromConnection}"></span></div>
-									<div>From Name: <span th:text="${fc.fromConnectionName}"></span></div>
-									<div>Connected Through: <span th:text="${fc.toConnectionName}"></span></div>
-									<div>To: <span th:text="${fc.toConnection}"></span></div>
-									<div>Quality: <span th:text="${fc.qualityOfConnection}"></span></div>
+									<div>
+										<span th:text="${fc.fromConnection}"></span> => <span
+											th:text="${fc.fromConnectionName}"></span> => <span
+											th:text="${fc.toConnectionName}"></span> => <span
+											th:text="${fc.toConnection}"></span>
+									</div>
+									<div>
+										Quality: <span th:text="${fc.qualityOfConnection}"></span>
+									</div>
+									<hr />
 								</div>
 							</div>
 						</div>
