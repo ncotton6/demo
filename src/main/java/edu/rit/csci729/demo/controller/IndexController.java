@@ -44,15 +44,15 @@ public class IndexController {
 			String[] name_type = v.split(":");
 			startingPoint.put(new MappingSource("Initial." + name_type[0], name_type[1]), name_type[0]);
 		}
-		model.addAttribute("result",
-				generateResult(startingPoint, new ArrayList<List<Operation>>(), new HashSet<Operation>(), threshold));
+		model.addAttribute("result", generateResult(startingPoint,
+				new ArrayList<List<Tuple<List<FieldConnection>, Operation>>>(), new HashSet<Operation>(), threshold));
 		return "breakdown";
 	}
 
-	private List<List<Tuple<List<FieldConnection>,Operation>>> generateResult(Map<MappingSource, String> holding, List<List<Tuple<List<FieldConnection>,Operation>>> execution,
-			Set<Operation> used, double threshold) {
+	private List<List<Tuple<List<FieldConnection>, Operation>>> generateResult(Map<MappingSource, String> holding,
+			List<List<Tuple<List<FieldConnection>, Operation>>> execution, Set<Operation> used, double threshold) {
 		HashMap<MappingSource, String> toAdd = new HashMap<MappingSource, String>();
-		execution.add(new ArrayList<Tuple<List<FieldConnection>,Operation>>());
+		execution.add(new ArrayList<Tuple<List<FieldConnection>, Operation>>());
 		boolean added = false;
 		for (Operation oper : OperationCollection.get()) {
 			if (!used.contains(oper)) {
@@ -69,7 +69,7 @@ public class IndexController {
 						toAdd.put(ent.getKey(), ent.getValue());
 					}
 					System.out.println("Adding: " + oper.getOperationName());
-					execution.get(execution.size() - 1).add(oper);
+					execution.get(execution.size() - 1).add(new Tuple<List<FieldConnection>, Operation>(result, oper));
 					used.add(oper);
 					added = true;
 				} catch (NoMappingFound e) {
