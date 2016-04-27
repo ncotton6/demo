@@ -19,6 +19,7 @@ import edu.rit.csci729.model.MappingSource;
 import edu.rit.csci729.model.NoMappingFound;
 import edu.rit.csci729.model.Operation;
 import edu.rit.csci729.model.OperationCollection;
+import edu.rit.csci729.model.Tuple;
 
 @Controller
 @RequestMapping("/")
@@ -48,10 +49,10 @@ public class IndexController {
 		return "breakdown";
 	}
 
-	private List<List<Operation>> generateResult(Map<MappingSource, String> holding, List<List<Operation>> execution,
+	private List<List<Tuple<List<FieldConnection>,Operation>>> generateResult(Map<MappingSource, String> holding, List<List<Tuple<List<FieldConnection>,Operation>>> execution,
 			Set<Operation> used, double threshold) {
 		HashMap<MappingSource, String> toAdd = new HashMap<MappingSource, String>();
-		execution.add(new ArrayList<Operation>());
+		execution.add(new ArrayList<Tuple<List<FieldConnection>,Operation>>());
 		boolean added = false;
 		for (Operation oper : OperationCollection.get()) {
 			if (!used.contains(oper)) {

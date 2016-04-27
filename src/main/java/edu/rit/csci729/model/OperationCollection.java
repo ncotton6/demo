@@ -2,6 +2,7 @@ package edu.rit.csci729.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class OperationCollection extends ArrayList<Operation> {
 
@@ -14,7 +15,7 @@ public class OperationCollection extends ArrayList<Operation> {
 	public static OperationCollection get() {
 		if (coll == null)
 			synchronized (OperationCollection.class) {
-				if (coll == null){
+				if (coll == null) {
 					coll = new OperationCollection();
 					setup();
 				}
@@ -67,6 +68,22 @@ public class OperationCollection extends ArrayList<Operation> {
 		});
 		jobInfo.setOperationName("JobInfo");
 		oc.add(jobInfo);
+
+		/// Shavari content
+		/*String tvService = "TVService";
+		TypeMapping.get().addService(tvService, new HashMap<String, Map<String, String>>() {
+			{
+				put("description", new HashMap<String, String>());
+			}
+		});
+		Operation tv = new Operation(new HashMap<String, String>() {
+			{
+			}
+		}, new HashMap<String, String>() {
+			{
+
+			}
+		});*/
 	}
 
 }
