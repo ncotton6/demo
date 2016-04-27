@@ -23,7 +23,8 @@
 		<form action="#" th:action="@{/gen}" method="get">
 			<div class="form-group">
 				Available Data: <input type="text"
-					placeholder="(name:type,name:type)" th:name="input" class="form-control" />
+					placeholder="(name:type,name:type)" th:name="input"
+					class="form-control" />
 			</div>
 			<div class="form-group">
 				Threshold: <input type="text" placeholder="(0-1)"
@@ -31,6 +32,25 @@
 			</div>
 			<div class="text-center">
 				<button type="submit" class="btn">Generate</button>
+			</div>
+		</form>
+		<hr />
+		<h3>Add an Operation</h3>
+		<form action="#" th:action="@{/add}" method="post">
+			<div class="form-group">
+				Operation name: <input type="text" placeholder="Operation Name"
+					th:name="name" class="form-control" />
+			</div>
+			<div class="form-group">
+				Inputs: <input type="text" placeholder="(name:type,name:type)"
+					th:name="inputs" class="form-control" />
+			</div>
+			<div class="form-group">
+				Outputs: <input type="text" placeholder="(name:type,name:type)"
+					th:name="outputs" class="form-control" />
+			</div>
+			<div class="text-center">
+				<button type="submit" class="btn">Add</button>
 			</div>
 		</form>
 	</div>

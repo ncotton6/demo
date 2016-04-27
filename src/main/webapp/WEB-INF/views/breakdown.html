@@ -22,10 +22,10 @@
 		<h1>
 			Generation Demo with {<span th:text="${starting}"></span>}
 		</h1>
-		<div th:each="stage : ${result}" class="panel panel-default">
+		<div th:each="stage,iterStat : ${result}" class="panel panel-default">
 
 
-			<div class="panel-heading">Iteration:</div>
+			<div class="panel-heading">Iteration: <span th:text="${iterStat.count}"></span></div>
 
 			<div class="panel-body">
 				<div th:each="oper : ${stage}">

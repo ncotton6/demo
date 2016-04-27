@@ -29,6 +29,28 @@ public class IndexController {
 	public String index() throws NoMappingFound {
 		return "index";
 	}
+	
+	@RequestMapping(value = "/add",method = RequestMethod.POST)
+	public String addOperation(String inputs, String outputs, String name){
+		String[] in = inputs.split(",");
+		Operation oper = new Operation();
+		HashMap<String,String> inp = new HashMap<String, String>();
+		for(String s : in){
+			String[] nt = s.split(":");
+			inp.put(nt[0], nt[1]);
+		}
+		String[] out = inputs.split(",");
+		HashMap<String,String> outp = new HashMap<String, String>();
+		for(String s : out){
+			String[] nt = s.split(":");
+			outp.put(nt[0], nt[1]);
+		}
+		oper.setOperationName(name);
+		oper.setInput(inp);
+		oper.setOutput(outp);
+		OperationCollection.get().add(oper);		
+		return "redirect:/";
+	}
 
 	@RequestMapping(value = "/gen", method = RequestMethod.GET)
 	public String operationBreakDown(Model model, String input, Double threshold) {
